@@ -70,12 +70,12 @@ function FileTreeItem({
         setContextMenu({ x: e.clientX, y: e.clientY });
     };
 
-    const handleDragStart = (e: React.DragEvent) => {
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('nodeId', node.id);
     };
 
-    const handleDragOver = (e: React.DragEvent) => {
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         if (node.type === 'folder') {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
@@ -83,11 +83,12 @@ function FileTreeItem({
         }
     };
 
-    const handleDragLeave = () => {
+    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
         setDragOver(false);
     };
 
-    const handleDrop = (e: React.DragEvent) => {
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
         setDragOver(false);
