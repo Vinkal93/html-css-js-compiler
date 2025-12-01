@@ -126,56 +126,52 @@ function FileTreeItem({
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 onContextMenu={handleContextMenu}
+                onClick={handleClick}
+                className={`
+                    flex items-center gap-2 px-2 py-1.5 rounded-lg cursor-pointer
+                    transition-all duration-200 group hover:translate-x-0.5
+                    ${isActive
+                        ? 'bg-[var(--tab-active)] text-[var(--text-primary)]'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--tab-hover)] hover:text-[var(--text-primary)]'
+                    }
+                    ${dragOver ? 'bg-[rgb(var(--accent-blue))]/20 border-2 border-[rgb(var(--accent-blue))]' : ''}
+                `}
+                style={{ paddingLeft: `${level * 12 + 8}px` }}
             >
-                <motion.div
-                    onClick={handleClick}
-                    className={`
-                        flex items-center gap-2 px-2 py-1.5 rounded-lg cursor-pointer
-                        transition-all duration-200 group
-                        ${isActive
-                            ? 'bg-[var(--tab-active)] text-[var(--text-primary)]'
-                            : 'text-[var(--text-secondary)] hover:bg-[var(--tab-hover)] hover:text-[var(--text-primary)]'
-                        }
-                        ${dragOver ? 'bg-[rgb(var(--accent-blue))]/20 border-2 border-[rgb(var(--accent-blue))]' : ''}
-                    `}
-                    style={{ paddingLeft: `${level * 12 + 8}px` }}
-                    whileHover={{ x: 2 }}
-                >
-                    {/* Expand/Collapse Icon */}
-                    {node.type === 'folder' && (
-                        <span className="w-4 h-4 flex items-center justify-center flex-shrink-0">
-                            {isExpanded ? (
-                                <ChevronDown className="w-4 h-4" />
-                            ) : (
-                                <ChevronRight className="w-4 h-4" />
-                            )}
-                        </span>
-                    )}
-
-                    {/* File/Folder Icon */}
-                    <FileIcon
-                        filename={node.name}
-                        isFolder={node.type === 'folder'}
-                        isOpen={isExpanded}
-                    />
-
-                    {/* Name */}
-                    <span className="flex-1 text-sm truncate">
-                        {node.name}
+                {/* Expand/Collapse Icon */}
+                {node.type === 'folder' && (
+                    <span className="w-4 h-4 flex items-center justify-center flex-shrink-0">
+                        {isExpanded ? (
+                            <ChevronDown className="w-4 h-4" />
+                        ) : (
+                            <ChevronRight className="w-4 h-4" />
+                        )}
                     </span>
+                )}
 
-                    {/* Main HTML Indicator */}
-                    {isMainHtml && (
-                        <span className="text-xs px-1.5 py-0.5 rounded bg-[rgb(var(--accent-blue))]/20 text-[rgb(var(--accent-blue))]">
-                            main
-                        </span>
-                    )}
+                {/* File/Folder Icon */}
+                <FileIcon
+                    filename={node.name}
+                    isFolder={node.type === 'folder'}
+                    isOpen={isExpanded}
+                />
 
-                    {/* Modified Indicator */}
-                    {node.isModified && (
-                        <span className="w-2 h-2 rounded-full bg-[rgb(var(--accent-blue))]" />
-                    )}
-                </motion.div>
+                {/* Name */}
+                <span className="flex-1 text-sm truncate">
+                    {node.name}
+                </span>
+
+                {/* Main HTML Indicator */}
+                {isMainHtml && (
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-[rgb(var(--accent-blue))]/20 text-[rgb(var(--accent-blue))]">
+                        main
+                    </span>
+                )}
+
+                {/* Modified Indicator */}
+                {node.isModified && (
+                    <span className="w-2 h-2 rounded-full bg-[rgb(var(--accent-blue))]" />
+                )}
             </div>
 
             {/* Children */}
